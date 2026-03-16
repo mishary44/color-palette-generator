@@ -8,7 +8,7 @@ palatteContainer.addEventListener("click", function (e) {
     const hexValue = e.target.previousElementSibling.textContent;
     navigator.clipboard
       .writeText(hexValue)
-      .then(() => showCopySuccess())
+      .then(() => showCopySuccess(e.target))
       .catch((err) => console.log(err));
   } else if (e.target.classList.contains("color")) {
     const hexValue =
@@ -16,7 +16,9 @@ palatteContainer.addEventListener("click", function (e) {
 
     navigator.clipboard
       .writeText(hexValue)
-      .then(() => showCopySuccess())
+      .then(() =>
+        showCopySuccess(e.target.nextElementSibling.querySelector(".copy-btn")),
+      )
       .catch((err) => console.log(err));
   }
 });
@@ -46,14 +48,14 @@ function updatePalatteDisplay(colors) {
     hexValue.textContent = color;
   });
 }
-function showCopySuccess() {
-  CopyBtn.classList.remove("far", "fa-copy");
-  CopyBtn.classList.add("fas", "fa-check");
-  CopyBtn.style.color = "#48bb78";
+function showCopySuccess(element) {
+  element.classList.remove("far", "fa-copy");
+  element.classList.add("fas", "fa-check");
+  element.style.color = "#48bb78";
   setTimeout(() => {
-    CopyBtn.classList.remove("fas", "fa-check");
-    CopyBtn.classList.add("far", "fa-copy");
-    CopyBtn.style.color = "";
+    element.classList.remove("fas", "fa-check");
+    element.classList.add("far", "fa-copy");
+    element.style.color = "";
   }, 1500);
 }
 generatePalette();
